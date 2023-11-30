@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 
 namespace KalkulatorKonsola
 {
@@ -6,9 +7,18 @@ namespace KalkulatorKonsola
     {
         static void Main(string[] args)
         {
-            while (true)
+            int option = 0;
+            while (option != 5)
             {
-                Console.WriteLine("Kalkulator");
+                Console.WriteLine(" __________\r\n" +
+                  "| ________ |\r\n" +
+                  "||12345678||\r\n" +
+                  "|\"\"\"\"\"\"\"\"\"\"|\r\n" +
+                  "|[M|#|C][-]|\r\n" +
+                  "|[7|8|9][+]|\r\n" +
+                  "|[4|5|6][x]|\r\n" +
+                  "|[1|2|3][%]|\r\n" +
+                  "|[.|O|:][=]|\r\n\"----------\" ");
                 Console.WriteLine("Wybierz operacje:");
                 Console.WriteLine("1. Dodawanie");
                 Console.WriteLine("2. Odejmowanie");
@@ -17,53 +27,81 @@ namespace KalkulatorKonsola
                 Console.WriteLine("5. Wyjście");
 
                 // Pobierz wybór od użytkownika
-                int wybor = Convert.ToInt32(Console.ReadLine());
-
-                if (wybor == 5)
-                {
-                    // Zakończ program, jeśli użytkownik wybierze 5
-                    break;
-                }
-
-                Console.Write("Podaj pierwszą liczbę: ");
-                double liczba1 = Convert.ToDouble(Console.ReadLine());
-
-                Console.Write("Podaj drugą liczbę: ");
-                double liczba2 = Convert.ToDouble(Console.ReadLine());
-
-                double wynik = 0;
+                option = Convert.ToInt32(Console.ReadLine());
 
                 // Wykonaj odpowiednią operację na podstawie wyboru użytkownika
-                switch (wybor)
+                double result = 0;
+                double number1, number2;
+                switch (option)
                 {
                     case 1:
-                        wynik = liczba1 + liczba2;
+                        TakeNumbers(out number1, out number2);
+                        result = Sum(number1, number2);
+                        Console.WriteLine("Wynik: " + result);
                         break;
                     case 2:
-                        wynik = liczba1 - liczba2;
+                        TakeNumbers(out number1, out number2);
+                        result = Subtraction(number1, number2);
+                        Console.WriteLine("Wynik: " + result);
                         break;
                     case 3:
-                        wynik = liczba1 * liczba2;
+                        TakeNumbers(out number1, out number2);
+                        result = Multiplication(number1, number2);
+                        Console.WriteLine("Wynik: " + result);
                         break;
                     case 4:
-                        if (liczba2 != 0)
-                        {
-                            wynik = liczba1 / liczba2;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Nie można dzielić przez zero.");
-                            continue;
-                        }
+                        TakeNumbers(out number1, out number2);
+                        result = Division(number1, number2);
+                        Console.WriteLine("Wynik: " + result);
+                        break;
+                    case 5:
+                        Console.WriteLine("Dziękuje za skorzystanie z aplikacji.");
                         break;
                     default:
                         Console.WriteLine("Nieprawidłowy wybór.");
                         continue;
                 }
 
-                Console.WriteLine("Wynik: " + wynik);
-                Console.WriteLine("Hello World!");
+                static double Sum(double number1, double number2)
+                {
+                    return number1 + number2;
+                }
+
+                static double Subtraction(double number1, double number2)
+                {
+                    return number1 - number2;
+                }
+
+                static double Multiplication(double number1, double number2)
+                {
+                    return number1 * number2;
+                }
+
+                static double Division(double number1, double number2)
+                {
+                    if (number2 != 0)
+                    {
+                        return number1 / number2;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nie można dzielić przez zero.");
+                        return 0; // lub inna wartość oznaczająca błąd
+                    }
+                }
+
+
+                static void TakeNumbers(out double number1, out double number2)
+                {
+                    Console.Write("Podaj pierwszą liczbę: ");
+                    number1 = Convert.ToDouble(Console.ReadLine());
+
+                    Console.Write("Podaj drugą liczbę: ");
+                    number2 = Convert.ToDouble(Console.ReadLine());
+                }
+
             }
+
         }
     }
 }
